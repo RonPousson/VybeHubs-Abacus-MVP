@@ -1,0 +1,41 @@
+{
+    "name": "vybehubs-mvp",
+    "version": "1.0.0",
+    "description": "VybeHubs - Niche Community Platform MVP",
+    "main": "server.js",
+    "scripts": {
+          "start": "node local.js",
+          "dev": "nodemon local.js",
+          "build": "echo 'Build complete'",
+          "test": "echo 'No tests specified'"
+    },
+    "dependencies": {
+          "bcryptjs": "^2.4.3",
+          "cors": "^2.8.5",
+          "dotenv": "^16.3.1",
+          "express": "^4.18.2",
+          "helmet": "^7.0.0",
+          "jsonwebtoken": "^9.0.2",
+          "multer": "^1.4.5-lts.1",
+          "nodemon": "^3.0.1",
+          "pg": "^8.11.3",
+          "redis": "^4.6.7",
+          "socket.io": "^4.7.2",
+          "uuid": "^9.0.0"
+    },
+    "engines": {
+          "node": ">=18.0.0"
+    },
+    "keywords": [
+          "community",
+          "chat",
+          "location",
+          "social",
+          "mvp"
+    ],
+    "author": "VybeHubs Team",
+    "license": "MIT",
+    "devDependencies": {
+          "vercel": "^48.1.0"
+    }
+}
