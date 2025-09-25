@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VybeHubs - Discover Your Tribe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #f1f5f9;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --bg: #ffffff;
+            --bg-light: #f8fafc;
+            --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+        }
+
+        /* Main Content */
+        .main {
+            padding: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-radius: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        /* Filters */
+        .filters {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .filter-input {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgb(99 102 241 / 0.1);
+        }
+
+        /* Communities Grid */
+        .communities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .community-card {
+            background: var(--bg);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .community-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .community-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .community-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .community-category {
+            background: var(--secondary);
+            color: var(--primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .community-description {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .community-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .community-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: var(--bg-light);
+            color: var(--text-light);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+        }
+
+        .community-location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgb(99 102 241 / 0.1);
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            display: none;
+            background: var(--bg);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: var(--bg-light);
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: var(--bg);
+            box-shadow: var(--shadow);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .chat-input-container {
+            padding: 1rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            resize: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .communities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .success {
+            background: #f0fdf4;
+            color: #16a34a;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <a href="#" class="logo">VybeHubs</a>
+            <div class="nav-links">
+                <div id="user-info" style="display: none;">
+                    <span id="username-display"></span>
+                    <span id="streak-display" class="btn btn-secondary">🔥 0</span>
+                </div>
+                <button id="login-btn" class="btn btn-primary">Login</button>
+                <button id="register-btn" class="btn btn-secondary">Sign Up</button>
+                <button id="logout-btn" class="btn btn-secondary" style="display: none;">Logout</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Discover Your Tribe</h1>
+            <p>Connect with niche communities based on your location and interests</p>
+            <button id="get-location-btn" class="btn btn-secondary">
+                <i class="fas fa-map-marker-alt"></i>
+                Find Communities Near Me
+            </button>
+        </section>
+
+        <!-- Filters -->
+        <section class="filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="category-filter">Category</label>
+                    <select id="category-filter" class="filter-input">
+                        <option value="all">All Categories</option>
+                        <option value="technology">Technology</option>
+                        <option value="finance">Finance</option>
+                        <option value="lifestyle">Lifestyle</option>
+                        <option value="music">Music</option>
+                        <option value="food">Food</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="search-input">Search</label>
+                    <input type="text" id="search-input" class="filter-input" placeholder="Search communities...">
+                </div>
+                <div class="filter-group">
+                    <label for="radius-input">Radius (km)</label>
+                    <input type="number" id="radius-input" class="filter-input" value="50" min="1" max="500">
+                </div>
+            </div>
+        </section>
+
+        <!-- Communities Grid -->
+        <section id="communities-section">
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading communities...
+            </div>
+            <div id="communities-grid" class="communities-grid" style="display: none;"></div>
+        </section>
+
+        <!-- Chat Container -->
+        <section id="chat-container" class="chat-container">
+            <div class="chat-header">
+                <h3 id="chat-title">Community Chat</h3>
+                <button id="close-chat-btn" class="close-btn">&times;</button>
+            </div>
+            <div id="chat-messages" class="chat-messages"></div>
+            <div class="chat-input-container">
+                <textarea id="chat-input" class="chat-input" placeholder="Type your message..." rows="2"></textarea>
+                <button id="send-message-btn" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+                <button id="voice-message-btn" class="btn btn-secondary">
+                    <i class="fas fa-microphone"></i>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Login</h2>
+                <button class="close-btn" onclick="closeModal('login-modal')">&times;</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Sign Up</h2>
+                <button class="close-btn" onclick="closeModal('register-modal')">&times;</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Username</label>
+                    <input type="text" id="register-username" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input type="password" id="register-password" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        // Global variables
+        let currentUser = null;
+        let userLocation = null;
+        let socket = null;
+        let currentCommunity = null;
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            setupEventListeners();
+            checkAuthStatus();
+        });
+
+        function initializeApp() {
+            loadCommunities();
+        }
+
+        function setupEventListeners() {
+            // Auth buttons
+            document.getElementById('login-btn').addEventListener('click', () => openModal('login-modal'));
+            document.getElementById('register-btn').addEventListener('click', () => openModal('register-modal'));
+            document.getElementById('logout-btn').addEventListener('click', logout);
+
+            // Forms
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            document.getElementById('register-form').addEventListener('submit', handleRegister);
+
+            // Filters
+            document.getElementById('category-filter').addEventListener('change', loadCommunities);
+            document.getElementById('search-input').addEventListener('input', debounce(loadCommunities, 300));
+            document.getElementById('radius-input').addEventListener('change', loadCommunities);
+
+            // Location
+            document.getElementById('get-location-btn').addEventListener('click', getUserLocation);
+
+            // Chat
+            document.getElementById('close-chat-btn').addEventListener('click', closeChat);
+            document.getElementById('send-message-btn').addEventListener('click', sendMessage);
+            document.getElementById('chat-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        }
+
+        function checkAuthStatus() {
+            const token = localStorage.getItem('vybehubs_token');
+            if (token) {
+                // Verify token and get user info
+                fetch('/api/user/streak', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        const userData = JSON.parse(localStorage.getItem('vybehubs_user'));
+                        if (userData) {
+                            currentUser = userData;
+                            updateAuthUI();
+                            initializeSocket();
+                        }
+                    } else {
+                        localStorage.removeItem('vybehubs_token');
+                        localStorage.removeItem('vybehubs_user');
+                    }
+                })
+                .catch(console.error);
+            }
+        }
+
+        function updateAuthUI() {
+            if (currentUser) {
+                document.getElementById('user-info').style.display = 'flex';
+                document.getElementById('username-display').textContent = currentUser.username;
+                document.getElementById('streak-display').textContent = `🔥 ${currentUser.streak || 0}`;
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('register-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'block';
+            } else {
+                document.getElementById('user-info').style.display = 'none';
+                document.getElementById('login-btn').style.display = 'block';
+                document.getElementById('register-btn').style.display = 'block';
+                document.getElementById('logout-btn').style.display = 'none';
+            }
+        }
+
+        function initializeSocket() {
+            if (socket) socket.disconnect();
+            
+            socket = io();
+            
+            socket.on('connect', () => {
+                console.log('Connected to server');
+            });
+
+            socket.on('new-message', (message) => {
+                displayMessage(message);
+            });
+
+            socket.on('user-typing', (data) => {
+                showTypingIndicator(data.username);
+            });
+
+            socket.on('user-stop-typing', () => {
+                hideTypingIndicator();
+            });
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('vybehubs_token', data.token);
+                    localStorage.setItem('vybehubs_user', JSON.stringify(data.user));
+                    currentUser = data.user;
+                    updateAuthUI();
+                    initializeSocket();
+                    closeModal('login-modal');
+                    showSuccess('Login successful!');
+                } else {
+                    showError(data.error || 'Login failed');
+                }
+            } catch (error) {
+                showError('Network error. Please try again.');
+            }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('vybehubs_token', data.token);
+                    localStorage.setItem('vybehubs_user', JSON.stringify(data.user));
+                    currentUser = data.user;
+                    updateAuthUI();
+                    initializeSocket();
+                    closeModal('register-modal');
+                    showSuccess('Registration successful!');
+                } else {
+                    showError(data.error || 'Registration failed');
+                }
+            } catch (error) {
+                showError('Network error. Please try again.');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('vybehubs_token');
+            localStorage.removeItem('vybehubs_user');
+            currentUser = null;
+            if (socket) socket.disconnect();
+            updateAuthUI();
+            closeChat();
+            showSuccess('Logged out successfully');
+        }
+
+        async function loadCommunities() {
+            const loading = document.getElementById('loading');
+            const grid = document.getElementById('communities-grid');
+            
+            loading.style.display = 'block';
+            grid.style.display = 'none';
+
+            try {
+                const category = document.getElementById('category-filter').value;
+                const search = document.getElementById('search-input').value;
+                const radius = document.getElementById('radius-input').value;
+
+                let url = '/api/communities?';
+                const params = new URLSearchParams();
+                
+                if (category !== 'all') params.append('category', category);
+                if (search) params.append('search', search);
+                if (userLocation) {
+                    params.append('lat', userLocation.lat);
+                    params.append('lng', userLocation.lng);
+                    params.append('radius', radius);
+                }
+
+                const response = await fetch(url + params.toString());
+                const communities = await response.json();
+
+                displayCommunities(communities);
+            } catch (error) {
+                showError('Failed to load communities');
+            } finally {
+                loading.style.display = 'none';
+                grid.style.display = 'grid';
+            }
+        }
+
+        function displayCommunities(communities) {
+            const grid = document.getElementById('communities-grid');
+            
+            if (communities.length === 0) {
+                grid.innerHTML = '<div class="loading">No communities found</div>';
+                return;
+            }
+
+            grid.innerHTML = communities.map(community => `
+                <div class="community-card" onclick="openCommunity('${community.id}')">
+                    <div class="community-header">
+                        <div>
+                            <h3 class="community-name">${community.name}</h3>
+                            <span class="community-category">${community.category}</span>
+                        </div>
+                        ${community.isPrivate ? '<i class="fas fa-lock" style="color: var(--text-light);"></i>' : ''}
+                    </div>
+                    <p class="community-description">${community.description}</p>
+                    <div class="community-stats">
+                        <span class="stat">
+                            <i class="fas fa-users"></i>
+                            ${community.memberCount} members
+                        </span>
+                        <span class="stat">
+                            <i class="fas fa-star"></i>
+                            ${community.reputation}
+                        </span>
+                        ${community.distance ? `
+                            <span class="stat">
+                                <i class="fas fa-map-marker-alt"></i>
+                                ${community.distance.toFixed(1)} km
+                            </span>
+                        ` : ''}
+                    </div>
+                    <div class="community-tags">
+                        ${community.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    ${community.location ? `
+                        <div class="community-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${community.location.name}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        function openCommunity(communityId) {
+            if (!currentUser) {
+                showError('Please login to join communities');
+                return;
+            }
+
+            currentCommunity = communityId;
+            
+            // Show chat interface
+            document.getElementById('chat-container').style.display = 'block';
+            document.getElementById('chat-title').textContent = `Community Chat`;
+            
+            // Join community room
+            if (socket) {
+                socket.emit('join-community', communityId);
+            }
+
+            // Load messages
+            loadMessages(communityId);
+            
+            // Scroll to chat
+            document.getElementById('chat-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function loadMessages(communityId) {
+            try {
+                const token = localStorage.getItem('vybehubs_token');
+                const response = await fetch(`/api/communities/${communityId}/messages`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    const messages = await response.json();
+                    const messagesContainer = document.getElementById('chat-messages');
+                    messagesContainer.innerHTML = '';
+                    
+                    messages.forEach(message => displayMessage(message));
+                }
+            } catch (error) {
+                console.error('Failed to load messages:', error);
+            }
+        }
+
+        function displayMessage(message) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message';
+            messageElement.innerHTML = `
+                <div class="message-header">
+                    <span class="message-author">${message.username}</span>
+                    <span class="message-time">${new Date(message.timestamp).toLocaleTimeString()}</span>
+                </div>
+                <div class="message-content">
+                    ${message.type === 'voice' ? 
+                        `<audio controls><source src="${message.voiceUrl}" type="audio/webm"></audio>` :
+                        message.message
+                    }
+                    ${message.disappearing ? '<span style="color: var(--warning); font-size: 0.75rem;">⏰ Disappearing</span>' : ''}
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageElement);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (!message || !currentCommunity || !socket) return;
+
+            socket.emit('send-message', {
+                communityId: currentCommunity,
+                message: message,
+                userId: currentUser.id,
+                username: currentUser.username,
+                type: 'text'
+            });
+
+            input.value = '';
+        }
+
+        function closeChat() {
+            document.getElementById('chat-container').style.display = 'none';
+            currentCommunity = null;
+        }
+
+        function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        showSuccess('Location detected! Loading nearby communities...');
+                        loadCommunities();
+                    },
+                    (error) => {
+                        showError('Unable to get your location. Please enable location services.');
+                    }
+                );
+            } else {
+                showError('Geolocation is not supported by this browser.');
+            }
+        }
+
+        // Utility functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function showError(message) {
+            // Simple error display - you can enhance this
+            alert('Error: ' + message);
+        }
+
+        function showSuccess(message) {
+            // Simple success display - you can enhance this
+            alert('Success: ' + message);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function showTypingIndicator(username) {
+            // Implementation for typing indicator
+        }
+
+        function hideTypingIndicator() {
+            // Implementation for hiding typing indicator
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
